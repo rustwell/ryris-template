@@ -1,0 +1,623 @@
+{
+  "openapi":"3.0.2",
+  "info": {
+    "title":"Mfood API",
+    "version":"1.0",
+    "description": "Mfood RESTful API documentation based on OpenAPI specification with Swagger UI",
+    "contact": {
+      "name": "Me",
+      "email": "rustwell77@gmail.com"
+    }
+  },
+  "servers": [
+    {
+      "url":"http://localhost:3000/api/v1",
+      "description": "Development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Category",
+      "description": "List of all category endpoint path which is use to handle category resource"
+    },
+    {
+      "name": "Rekening",
+      "description": "List of all rekening endpoint path which is use to handle rekening resource"
+    }
+  ],
+  "paths": {
+    "/category": {
+      "post":{ 
+        "tags": ["Category"],
+        "summary": "Create category",
+        "description": "Insert one category into database",
+        "requestBody":{
+          "required": true,
+          "content": {
+            "application/json":{
+              "schema":{
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true,
+                    "minLength": 1
+                  }
+                }
+              },
+              "examples": {
+                "makanan":{
+                  "description": "example of payload makanan category",
+                  "value": {
+                    "name": "makanan"
+                  }
+                },
+                "minuman":{
+                  "description": "example of payload minuman category",
+                  "value": {
+                    "name": "minuman"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success response when the category is successfully inserted into the database",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "category created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "number",
+                          "example": 1
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "Fail response because user sent bad payload",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "bad payload"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "Fail reponse because user un authorized example not login",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "un authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403":{
+            "description": "Fail reponse because user not allowed to access this resource",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+       },
+      "get":{ 
+        "tags": ["Category"],
+        "summary": "Get all category",
+        "description": "Getting all category data from database",
+        "responses": {
+          "200": {
+            "description": "Success response when the category is successfully gets into the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "category":{
+                          "type": "array",
+                          "example": [
+                            {
+                              "id": 1,
+                              "name": "makanan"
+                          },
+                          {
+                            "id": 2,
+                            "name": "minuman"
+                          }]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category/{categoryId}": {
+      "put":{ 
+        "tags": ["Category"],
+        "summary": "Update existing category by id",
+        "description": "Update existing category by id into database",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "description": "id of category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "requestBody":{
+          "required": true,
+          "content": {
+            "application/json":{
+              "schema":{
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "required": true,
+                    "minLength": 1
+                  }
+                }
+              },
+              "examples": {
+                "makanan":{
+                  "description": "example of payload makanan category",
+                  "value": {
+                    "name": "makanan"
+                  }
+                },
+                "minuman":{
+                  "description": "example of payload minuman category",
+                  "value": {
+                    "name": "minuman"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200":{
+            "description": "Success response when the category is successfully updated into the database",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "category updated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "Fail response because user sent bad payload",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "bad payload"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "Fail response because user un authorized example not login",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "un authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403":{
+            "description": "Fail reponse because user not allowed to access this resource",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "Fail response because category id not found",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "category with id ${id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete":{ 
+        "tags": ["Category"],
+        "summary": "Delete existing category by id",
+        "description": "Delete existing category by id in the database",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "description": "id of category",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200":{
+            "description": "Success response when category is successfully deleted from the database",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "category deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "Fail reponse because user un authorized example not login",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "bad payload"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403":{
+            "description": "Fail reponse because user not allowed to access this resource",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404":{
+            "description": "Fail response because category id not found",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "category with id ${id} not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rekening": {
+      "post": {
+        "tags": ["Rekening"],
+        "summary": "Create rekening",
+        "description": "Insert one rekening into database",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "no": {
+                    "type": "number",
+                    "required": true,
+                    "minLength": 1
+                  },
+                  "nama": {},
+                  "bank": {},
+                  "cabang": {},
+                  "logo": {}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201":{
+            "description": "Success response when the Rekening is successfully inserted into the database",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "rekening created"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "example": "nfds0a9ajiosf0aj"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400":{
+            "description": "Fail response because user sent bad payload",
+            "content": {
+              "application/json": {
+                "schema":{
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "bad payload"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401":{
+            "description": "Fail reponse because user un authorized example not login",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "un authorized"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403":{
+            "description": "Fail reponse because user not allowed to access this resource",
+            "content": {
+              "application/json":{
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "fail"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "forbidden"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Rekening"],
+        "summary": "Get all rekening",
+        "description": "Get all rekening data from database",
+        "responses": {
+          "200": {
+            "description": "Success response when the rekening is successfully get into the database",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string",
+                      "example": "success"
+                    },
+                    "data": {
+                      "type": "object",
+                      "properties": {
+                        "category":{
+                          "type": "array",
+                          "example": [
+                            {
+                              "id": "m9d0sld00sld993d",
+                              "no": 339483940384,
+                              "nama": "Bobon",
+                              "logo": "https://mystorage.com/rekening/bobon-rekening.png"
+                          },
+                          {
+                            "id": "m9d0sld00sld88i8",
+                            "no": 994839403849,
+                            "nama": "Santoso",
+                            "logo": "https://mystorage.com/rekening/santoso-rekening.png"
+                          }]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rekening/{rekeningId}": {
+      "put": {
+        "tags": ["Rekening"],
+        "summary": "Update existing rekening by id",
+        "description": "Update existing rekening by id into database"
+      },
+      "delete": {
+        "tags": ["Rekening"],
+        "summary": "Delete existing rekening by id",
+        "description": "Delete existing rekening by id in the database"
+      }
+    }
+  }
+}
